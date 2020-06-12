@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>chat</title>
     <style>
-      .chat_log{ width: 95%; height: 200px; }
+      .chat_log{ width: 100%; height: 200px; }
       .name{ width: 10%; }
       .message{ width: 70%; }
       .chat{ width: 10%; }
@@ -20,20 +20,20 @@
       <input type="submit" class="chat" value="chat"/>
     </form>
     <div id="box" class="box">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script> <!-- 소켓 라이브러리 추가 -->
     <script src="//code.jquery.com/jquery-3.1.1.js"></script>
     <script>
       var socket = io();
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#name').val(), $('#message').val());
-        $('#message').val("");
-        $("#message").focus();
+        $('#message').val(""); //메시지를 보낸 후 메시지 공백 처리
+        $("#message").focus();//버튼을 누른 경우 클릭 효과 발생
         e.preventDefault();
       });
       socket.on('receive message', function(msg){
         $('#chatLog').append(msg+"\n");
         $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
-      });
+      });  //채팅 창에서 채팅이 계속 이루어질 경우 스크롤 위치를 가져옴
       socket.on('change name', function(name){
         $('#name').val(name);
       });
